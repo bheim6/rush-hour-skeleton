@@ -6,13 +6,21 @@ class UAgent < ActiveRecord::Base
   validates :operating_system, presence: true
   validates :operating_system, uniqueness: {scope: :browser}
 
-  def self.browser_breakdown
+  def self.u_agent_breakdown
     # breakdown("browser")
     # joins(:payload_requests).group(:browser).count(:browser)
-    group_by_u_agent.to_a.reduce({}) do |result, grouping|
-      u_agent = UAgent.find_by(:id => grouping[0]).browser
-      result = incrament_browser_count(result, u_agent, grouping[1])
-    end
+    # u_agent_id_counts = payload_requests.order("u_agent_id").group("u_agent_id").count
+    joins(:payload_requests).group(:u_agents).count.to_a.map do |u_agent_string_count|
+      id = u_agent_string_count[0].split(",")[0].sub("(", "")
+      [UAgent.find_by(id: id) ,u_agent_string_count[1]]
+    end.to_h
+
+    # binding.pry
+    # u_agent_id_counts = PayloadRequest.group("u_agent_id")
+    # group_by_u_agent.to_a.reduce({}) do |result, grouping|
+    #   u_agent = UAgent.find_by(:id => grouping[0]).browser
+    #   result = incrament_browser_count(result, u_agent, grouping[1])
+    # end
   end
 
   def self.os_breakdown

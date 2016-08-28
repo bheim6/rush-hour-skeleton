@@ -78,8 +78,23 @@ RSpec.describe UAgent, type: :model do
   end
 
   it "knows the web browser breakdown across all requests" do
-    make_some_u_agents_and_payload_requests
-    expect(UAgent.browser_breakdown).to eq({"Chrome"=>5, "Safari"=>1})
+    # make_some_u_agents_and_payload_requests
+    # expect(UAgent.browser_breakdown).to eq({"Chrome"=>5, "Safari"=>1})
+    # url_id, source_id, request_type_id, u_agent_id, screen_resolution_id, ip_address_id, client_id, response_time
+    Dummy.payload_request_1 # 1, 1, 1, 1, 1, 1, 1, 10 u_agent_1 - "Windows Vista", "browser" =>"Chrome"
+    Dummy.payload_request_2 # 2, 2, 2, 2, 2, 2, 1, 20 u_agent_2 - "MAC OSX", "browser" =>"Chrome"
+    Dummy.payload_request_4 # 4, 1, 1, 1, 1, 1, 2, 10 u_agent_1 - "Windows Vista", "browser" =>"Chrome"
+    Dummy.payload_request_5 # 5, 2, 2, 2, 2, 2, 2, 20 u_agent_2 - "MAC OSX", "browser" =>"Chrome"
+    Dummy.payload_request_9 # 9, 3, 3, 3, 3, 3, 3, 25 u_agent_3 - "Linux", "browser" =>"Firefox"
+    expect(PayloadRequest.all.count).to eq(5)
+
+    Dummy.u_agent_1 # "operating_system" =>"Windows Vista", "browser" =>"Chrome"
+    Dummy.u_agent_2 # "operating_system" =>"MAC OSX", "browser" =>"Chrome"
+    Dummy.u_agent_3 # "operating_system" =>"Linux", "browser" =>"Firefox"
+    expect(UAgent.all.count).to eq(3)
+    expect(UAgent.u_agent_breakdown.values).to include(2,1)
+    expect(UAgent.u_agent_breakdown.length).to eq(3)
+    expect(UAgent.u_agent_breakdown.keys).to all(be_an_instance_of(UAgent))
   end
 
   it "knows the operating system across all requests" do

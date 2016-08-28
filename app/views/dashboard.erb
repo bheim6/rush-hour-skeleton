@@ -1,3 +1,4 @@
+<h1> <%= @client.identifier %></h1>
 <table>
   <tr>
     <th>Average response time across all requests</th>
@@ -18,10 +19,18 @@
     </td>
   <tr>
     <th>Web browser breakdown across all requests</th>
-    <td></td>
+    <td>
+      <% @client.browser_breakdown.to_a.each do |browser_count| %>
+        <p> <%= browser_count[0] %> : <%= browser_count[1] %> </p>
+      <% end %>
+    </td>
   <tr>
     <th>OS breakdown across all requests</th>
-    <td></td>
+    <td>
+      <% @client.os_breakdown.to_a.each do |os_count| %>
+        <p> <%= os_count[0] %> : <%= os_count[1] %> </p>
+      <% end %>
+    </td>
   </tr>
   <tr>
     <th>Screen Resolutions across all requests (resolutionWidth x resolutionHeight)</th>

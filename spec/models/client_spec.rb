@@ -102,15 +102,21 @@ RSpec.describe Client, type: :model do
 
   it "will give breakdown of web_browsers across all requests" do
     client = Dummy.client_1
-    Dummy.payload_request_1
-    Dummy.payload_request_2
-    Dummy.payload_request_3
+    expect(Client.all.count).to eq(1)
+
+    Dummy.payload_request_1 # 1, 1, 1, 1, 1, 1, 1, 10
+    Dummy.payload_request_2 # 2, 2, 2, 2, 2, 2, 1, 20
+    Dummy.payload_request_3 # 3, 3, 3, 3, 3, 3, 1, 30
     pr = Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 10)
+    expect(PayloadRequest.all.count).to eq(4)
+
     Dummy.u_agent_1
     Dummy.u_agent_2
     Dummy.u_agent_3
+    expect(UAgent.all.count).to eq(3)
 
-    expect(client.browser_breakdown).to include("Chrome" => 3, "Firefox" => 1)
+    results = client.browser_breakdown
+    expect(results).to include("Chrome"=>3, "Firefox"=>1)
   end
 
   it "will give breakdown of operating systems across all requests" do
@@ -123,9 +129,8 @@ RSpec.describe Client, type: :model do
     Dummy.u_agent_2
     Dummy.u_agent_3
 
-    expect(client.os_breakdown).to include("Windows Vista" => 2,
-                                           "MAC OSX" => 1,
-                                           "Linux" => 1)
+    results = client.os_breakdown
+    expect(results).to include("Linux"=>1, "MAC OSX"=>1, "Windows Vista"=>2)
   end
 
   it "knows resolutions across all requests" do
