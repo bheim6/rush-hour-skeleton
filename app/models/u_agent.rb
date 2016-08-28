@@ -1,12 +1,18 @@
 class UAgent < ActiveRecord::Base
   has_many :payload_requests
+  has_many :clients
   validates :browser, presence: true
   validates :browser, uniqueness: {scope: :operating_system}
   validates :operating_system, presence: true
   validates :operating_system, uniqueness: {scope: :browser}
 
   def self.browser_breakdown
-    breakdown("browser")
+    # breakdown("browser")
+    # joins(:payload_requests).group(:browser).count(:browser)
+    group_by_u_agent.to_a.reduce({}) do |result, grouping|
+      u_agent = UAgent.find_by(:id => grouping[0]).browser
+      result = incrament_browser_count(result, u_agent, grouping[1])
+    end
   end
 
   def self.os_breakdown

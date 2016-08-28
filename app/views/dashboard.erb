@@ -1,37 +1,42 @@
 <table>
   <tr>
     <th>Average response time across all requests</th>
-    <td><%= @client.payload_requests.average_response_time %></td>
+    <td><%= @client.average_response_time %></td>
   </tr>
   <tr>
     <th>Max Response time across all requests</th>
-    <td><%= @client.payload_requests.max_response_time %></td>
+    <td><%= @client.max_response_time %></td>
   </tr>
   <tr>
     <th>Min Response time across all requests</th>
-    <td><%= @client.payload_requests.min_response_time %></td>
+    <td><%= @client.min_response_time %></td>
   </tr>
   <tr>
     <th>Most frequent request type</th>
+    <td>
+      <%= @client.most_frequent_request_type %>
+    </td>
   <tr>
-    <th>Web browser breakdown across all requests</th><td></td></tr>
+    <th>Web browser breakdown across all requests</th>
+    <td></td>
   <tr>
-    <th>OS breakdown across all requests</th><td></td></tr>
+    <th>OS breakdown across all requests</th>
+    <td></td>
+  </tr>
   <tr>
-    <th>Screen Resolutions across all requests (resolutionWidth x resolutionHeight)</th><td></td></tr>
-</table>
+    <th>Screen Resolutions across all requests (resolutionWidth x resolutionHeight)</th>
+    <td><%= @client.display_resolutions.uniq %></td>
+  </tr>
+</table> <!-- end of table-->
 
-<!-- <td>  @client.payload_requests.most_frequent_request_type %></td>
-</tr>
-<tr>
-<th>List of all HTTP verbs used</th>'
-<td>
-  <ul>@client.payload_requests.list_verbs.each do |verb| %>
-      <li>  verb %> </li>
-        end %>
-  </ul>
-</td>
-</tr>
-<tr>
-<th>List of URLs listed form most requested to least requested</th>
-<td> @client.payload_request %></td></tr> -->
+<% @client.urls.uniq.each do |url| %>
+  <% id = @client.identifier %>
+  <% address = url.address.split(id +".com").last %>
+  <p>id = <%= id %> </p>
+  <p>address = <%= address %> </p>
+  <p>
+    <a href="/sources/<%= id %>/urls<%= address %>">
+      <%= url.address %>
+    </a>
+  </p>
+<% end %>

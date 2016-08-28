@@ -23,8 +23,8 @@ class Client < ActiveRecord::Base
     payload_requests.min_response_time
   end
 
-  def most_frequesnt_request_type
-    request_types.most_frequent_request_type
+  def most_frequent_request_type
+    request_types.most_frequent_request_type.verb
   end
 
   def list_verbs
@@ -52,7 +52,7 @@ class Client < ActiveRecord::Base
   end
 
   def list_response_times(url)
-    url.response_times
+    url.response_times.uniq
   end
 
   def avg_response_time(url)

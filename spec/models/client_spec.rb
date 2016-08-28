@@ -84,7 +84,7 @@ RSpec.describe Client, type: :model do
     Dummy.request_type_3
 
     expected_request_type = RequestType.find_by("id" => pr.request_type_id)
-    expect(client.most_frequesnt_request_type).to eq(expected_request_type)
+    expect(client.most_frequent_request_type).to eq(expected_request_type.verb)
   end
 
   it "will list all of its http verbs" do
@@ -113,7 +113,7 @@ RSpec.describe Client, type: :model do
     expect(client.browser_breakdown).to include("Chrome" => 3, "Firefox" => 1)
   end
 
-  it "will give breakdown of web_browsers across all requests" do
+  it "will give breakdown of operating systems across all requests" do
     client = Dummy.client_1
     Dummy.payload_request_1
     Dummy.payload_request_2

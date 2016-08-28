@@ -1,0 +1,41 @@
+<h1><%= @url.address %></h1>
+<table>
+  <tr>
+    <th>Max Response Time</th>
+    <td><%= @client.url_max_response_time(@url) %></td>
+  </tr>
+  <tr>
+    <th>Min Response Time</th>
+    <td><%= @client.url_min_response_time(@url) %></td>
+  </tr>
+  <tr>
+    <th>List of response times from longest to shortest across all requests</th>
+    <td><%= @client.list_response_times(@url) %></td>
+  </tr>
+  <tr>
+    <th>Average response time</th>
+    <td><%= @client.avg_response_time(@url) %></td>
+  <tr>
+    <th>HTTP Verbs</th>
+    <td>
+      <% @client.list_verbs_for(@url).each do |request_type|  %>
+        <%= request_type.verb %>
+      <% end %>
+    </td>
+  <tr>
+    <th>Three most popular referrers</th>
+    <td>
+      <% @client.most_popular_sources_for(@url).each do |source| %>
+        <p> <%= source.address %> </p>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>Three most popular user agents</th>
+    <td>
+      <% @client.most_popular_u_agents_for(@url).each do |u_agent| %>
+        <p> <%= u_agent.browser %> on <%= u_agent.operating_system %> </p>
+      <% end %>
+    </td>
+  </tr>
+</table> <!-- end of table-->
