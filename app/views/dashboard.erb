@@ -1,0 +1,37 @@
+<table>
+  <tr>
+    <th>Average response time across all requests</th>
+    <td><%= @client.payload_requests.average_response_time %></td>
+  </tr>
+  <tr>
+    <th>Max Response time across all requests</th>
+    <td><%= @client.payload_requests.max_response_time %></td>
+  </tr>
+  <tr>
+    <th>Min Response time across all requests</th>
+    <td><%= @client.payload_requests.min_response_time %></td>
+  </tr>
+  <tr>
+    <th>Most frequent request type</th>
+  <tr>
+    <th>Web browser breakdown across all requests</th><td></td></tr>
+  <tr>
+    <th>OS breakdown across all requests</th><td></td></tr>
+  <tr>
+    <th>Screen Resolutions across all requests (resolutionWidth x resolutionHeight)</th><td></td></tr>
+</table>
+
+<!-- <td><<%=  @client.payload_requests.most_frequent_request_type %></td>
+</tr>
+<tr>
+<th>List of all HTTP verbs used</th>'
+<td>
+  <ul><% @client.payload_requests.list_verbs.each do |verb| %>
+      <li> <%= verb %> </li>
+        <% end %>
+  </ul>
+</td>
+</tr>
+<tr>
+<th>List of URLs listed form most requested to least requested</th>
+<td><%= @client.payload_request %></td></tr> -->

@@ -18,14 +18,14 @@ class PayloadRequest < ActiveRecord::Base
   validates :client_id, presence: true
 
   def self.average_response_time
-    PayloadRequest.average(:responded_in).to_i
+    average(:responded_in).to_i
   end
 
   def self.max_response_time
-    PayloadRequest.maximum(:responded_in).to_i
+    maximum(:responded_in).to_i
   end
 
   def self.min_response_time
-    PayloadRequest.minimum(:responded_in).to_i
+    minimum(:responded_in).to_i
   end
 end

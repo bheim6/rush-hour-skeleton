@@ -185,4 +185,34 @@ RSpec.describe RushHour::Server, type: :model do
     expect(PayloadRequest.all.count).to eq(1)
   end
 
+  it "will return status 400 if a client that does not exist makes a get request" do
+    get '/sources/jumpstartlab'
+    expect(last_response.status).to eq(400)
+  end
+
+  it "will return status 403 if no payload requests exist for a client" do
+    Client.create("identifier" => "jumpstartlab",
+      "root_url" => "www.jumpstartlab.com")
+    get '/sources/jumpstartlab'
+    expect(last_response.status).to eq(403)
+  end
+
+  it "will return status 200 if an exisiting client with 1 or more payload requests makes a get request" do
+    Client.create("identifier" => "jumpstartlab",
+      "root_url" => "www.jumpstartlab.com")
+    PayloadRequest.create(
+                "url_id"=>1,
+                "requested_at"=>"2013-02-16 21:38:28 -0700",
+                "responded_in"=>35,
+                "source_id"=>2,
+                "request_type_id"=>3,
+                "u_agent_id"=>5,
+                "screen_resolution_id"=>4,
+                "ip_address_id"=>6,
+                "client_id" => 1)
+
+    get '/sources/jumpstartlab'
+    expect(last_response.status).to eq(200)
+  end
+
 end

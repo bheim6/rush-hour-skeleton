@@ -1,13 +1,43 @@
 module RushHour
   class Server < Sinatra::Base
+
+    helpers do
+
+    
+
+    end
+
     attr_reader :expected_params,
                 :parameters,
                 :messages,
                 :exists,
-                :payload_request
+                :payload_request,
+                :client
 
     not_found do
       erb :error
+    end
+
+    get '/sources/:identifier' do
+      @client = Client.find_by(identifier: params[:identifier])
+      if client_exists? && client_has_payload_requests?
+        status 200
+        erb :dashboard
+      end
+      if client_exists? && !client_has_payload_requests?
+        status 403
+        @error = "No payload requests found for #{client.identifier}."
+        erb :error
+      end
+      if !client_exists?
+        status 400
+        @error = "Client not found."
+        erb :error
+      end
+    end
+
+    def client_has_payload_requests?
+      !client.payload_requests.empty?
     end
 
     post '/sources' do

@@ -7,18 +7,6 @@ RSpec.describe PayloadRequest, type: :model do
       DatabaseCleaner.clean
     end
 
-  def create_dummy_plr_url_1
-    PayloadRequest.create(
-                "url_id"=>1,
-                "requested_at"=>"2013-02-16 21:38:28 -0700",
-                "responded_in"=>35,
-                "source_id"=>2,
-                "request_type_id"=>3,
-                "u_agent_id"=>5,
-                "screen_resolution_id"=>4,
-                "ip_address_id"=>6)
-  end
-
   let(:payload) { PayloadRequest.new(
     "url_id"=>1,
     "requested_at"=>"2013-02-16 21:38:28 -0700",
@@ -150,4 +138,21 @@ RSpec.describe PayloadRequest, type: :model do
 
     expect(PayloadRequest.min_response_time).to eq(20)
   end
+
+  # skip "will find all request types" do
+  #   pr = PayloadRequest.create(
+  #     "url_id"=>1,
+  #     "requested_at"=>"2013-02-16 21:38:28 -0700",
+  #     "responded_in"=>37,
+  #     "source_id"=>2,
+  #     "request_type_id"=>1,
+  #     "u_agent_id"=>5,
+  #     "screen_resolution_id"=>4,
+  #     "ip_address_id"=>6,
+  #     "client_id"=>6)
+  #
+  #   RequestType.create("verb" => "GET")
+  #   binding.pry
+  #   thingy = pr.request_types
+  # end
 end
