@@ -13,6 +13,7 @@ require 'rspec'
 require 'database_cleaner'
 require 'pry'
 require 'rack/test'
+require 'capybara/rspec'
 
 include Dummy
 # require 'active_record'
@@ -26,7 +27,10 @@ RSpec.configure do |config|
   config.tty = true
   config.formatter = :documentation
   config.include Rack::Test::Methods
+  config.include Capybara::DSL
 end
+
+
 # DatabaseCleaner.clean_with(:truncation)
 # module TestHelpers
 #   after :each do

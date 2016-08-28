@@ -77,7 +77,7 @@ RSpec.describe UAgent, type: :model do
                                                         "Mac OS"=>1})
   end
 
-  it "knows the web browser breakdown across all requests" do
+  skip "knows the web browser breakdown across all requests" do
     # make_some_u_agents_and_payload_requests
     # expect(UAgent.browser_breakdown).to eq({"Chrome"=>5, "Safari"=>1})
     # url_id, source_id, request_type_id, u_agent_id, screen_resolution_id, ip_address_id, client_id, response_time
