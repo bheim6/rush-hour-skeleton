@@ -56,7 +56,7 @@ module Dummy
   end
 
   def self.payload_request_9
-    payload_request_template(9, 3, 3, 3, 3, 3, 3)
+    payload_request_template(9, 3, 3, 3, 3, 3, 3, 25)
   end
 
   def self.payload_request_custom(url_id, source_id, request_type_id, u_agent_id, screen_resolution_id, ip_address_id, client_id, response_time=rand(40))
@@ -120,39 +120,39 @@ module Dummy
   end
 
   def self.url_1
-    Url.create("address" =>"www.jumpstartlab/blog/1")
+    Url.create("address" =>"www.jumpstartlab.com/blog")
   end
 
   def self.url_2
-    Url.create("address" => "www.jumpstartlab/blog/2")
+    Url.create("address" => "www.jumpstartlab.com/cart")
   end
 
   def self.url_3
-    Url.create("address" => "www.jumpstartlab/blog/3")
+    Url.create("address" => "www.jumpstartlab.com/shop")
   end
 
   def self.url_4
-    Url.create("address" =>"www.turing/blog/1")
+    Url.create("address" =>"www.turing.com/blog")
   end
 
   def self.url_5
-    Url.create("address" => "www.turing/blog/2")
+    Url.create("address" => "www.turing.com/cart")
   end
 
   def self.url_6
-    Url.create("address" => "www.turing/blog/3")
+    Url.create("address" => "www.turing.com/shop")
   end
 
   def self.url_7
-    Url.create("address" =>"www.google/blog/1")
+    Url.create("address" =>"www.google.com/blog")
   end
 
   def self.url_8
-    Url.create("address" => "www.google/blog/2")
+    Url.create("address" => "www.google.com/cart")
   end
 
   def self.url_9
-    Url.create("address" => "www.google/blog/3")
+    Url.create("address" => "www.google.com/shop")
   end
 
 

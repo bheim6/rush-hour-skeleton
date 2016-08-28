@@ -3,8 +3,6 @@ module RushHour
 
     helpers do
 
-    
-
     end
 
     attr_reader :expected_params,
@@ -18,20 +16,33 @@ module RushHour
       erb :error
     end
 
+    get '/sources/:identifier/urls/:relativepath' do
+      @client = Client.find_by(identifier: params[:identifier])
+      address = @client.root_url +  "/" + params[:relativepath]
+      @url = Url.find_by(address: address)
+      if @url.nil?
+        status 403
+        @error = "Status 403: This is not a registered URL"
+        erb :error
+      else
+        status 200
+        erb :show
+      end
+    end
+
     get '/sources/:identifier' do
       @client = Client.find_by(identifier: params[:identifier])
       if client_exists? && client_has_payload_requests?
         status 200
         erb :dashboard
-      end
-      if client_exists? && !client_has_payload_requests?
+      elsif client_exists? && !client_has_payload_requests?
         status 403
-        @error = "No payload requests found for #{client.identifier}."
+        @error = "No payload requests found."
         erb :error
-      end
-      if !client_exists?
+      elsif !client_exists?
         status 400
-        @error = "Client not found."
+        @error = "Status 400: Client not found."
+        # erb :error
         erb :error
       end
     end

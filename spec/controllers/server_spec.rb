@@ -198,21 +198,32 @@ RSpec.describe RushHour::Server, type: :model do
   end
 
   it "will return status 200 if an exisiting client with 1 or more payload requests makes a get request" do
-    Client.create("identifier" => "jumpstartlab",
-      "root_url" => "www.jumpstartlab.com")
-    PayloadRequest.create(
-                "url_id"=>1,
-                "requested_at"=>"2013-02-16 21:38:28 -0700",
-                "responded_in"=>35,
-                "source_id"=>2,
-                "request_type_id"=>3,
-                "u_agent_id"=>5,
-                "screen_resolution_id"=>4,
-                "ip_address_id"=>6,
-                "client_id" => 1)
+    Dummy.client_1
+    Dummy.payload_request_1
+    Dummy.url_1
+    Dummy.source_1
+    Dummy.request_type_1
+    Dummy.u_agent_1
+    Dummy.screen_resolution_1
+    Dummy.ip_address_1
 
     get '/sources/jumpstartlab'
     expect(last_response.status).to eq(200)
   end
+
+  it "will show a single link page" do
+    Dummy.client_1
+    Dummy.payload_request_1
+    Dummy.url_1
+    Dummy.source_1
+    Dummy.request_type_1
+    Dummy.u_agent_1
+    Dummy.screen_resolution_1
+    Dummy.ip_address_1
+
+    get '/sources/jumpstartlab/urls/blog'
+    expect(last_response.status).to eq(200)
+  end
+
 
 end

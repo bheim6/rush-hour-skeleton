@@ -23,20 +23,26 @@ class Client < ActiveRecord::Base
     payload_requests.min_response_time
   end
 
-  def most_frequesnt_request_type
-    request_types.most_frequent_request_type
+  def most_frequent_request_type
+    request_types.most_frequent_request_type.verb
   end
 
   def list_verbs
     request_types.list_verbs.uniq
   end
 
-  def browser_breakdown
-    u_agents.browser_breakdown
+  def u_agent_breakdown
+    u_agents.u_agent_breakdown
   end
 
   def os_breakdown
-    u_agents.os_breakdown
+    # u_agent_id_counts = payload_requests.order("u_agent_id").group("u_agent_id").count
+    u_agents.group(:operating_system).count
+  end
+
+  def browser_breakdown
+    # u_agent_id_counts = payload_requests.order("u_agent_id").group("u_agent_id").count
+    u_agents.group(:browser).count
   end
 
   def display_resolutions
@@ -52,7 +58,7 @@ class Client < ActiveRecord::Base
   end
 
   def list_response_times(url)
-    url.response_times
+    url.response_times.uniq
   end
 
   def avg_response_time(url)
