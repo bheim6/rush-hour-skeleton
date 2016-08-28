@@ -155,9 +155,6 @@ module Dummy
     Url.create("address" => "www.google.com/shop")
   end
 
-
-
-
   private
 
   def self.payload_request_template(url_id, source_id, request_type_id, u_agent_id, screen_resolution_id, ip_address_id, client_id, response_time=rand(40))
