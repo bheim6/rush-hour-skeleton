@@ -43,4 +43,34 @@ class Client < ActiveRecord::Base
     screen_resolutions.display_resolutions
   end
 
+  def url_max_response_time(url)
+    url.max_response_time
+  end
+
+  def url_min_response_time(url)
+    url.min_response_time
+  end
+
+  def list_response_times(url)
+    url.response_times
+  end
+
+  def avg_response_time(url)
+    url.avg_response_time
+  end
+
+  def list_verbs_for(url)
+    url.verbs
+  end
+
+  def most_popular_sources_for(url)
+    url.top_3_sources
+  end
+
+  def most_popular_u_agents_for(url)
+    url.top_3_u_agents
+  end
+
+
+
 end

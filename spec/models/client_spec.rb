@@ -143,6 +143,102 @@ RSpec.describe Client, type: :model do
                                                   ["800", "600"])
   end
 
+  it "finds max response time for a specific url" do
+    client = Dummy.client_1
+    Dummy.payload_request_1
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20)
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 30)
+    url = Dummy.url_1
+
+    expect(client.url_max_response_time(url)).to eq(30)
+  end
+
+  it "finds min response time for a specific url" do
+    client = Dummy.client_1
+    Dummy.payload_request_1
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20)
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 30)
+    url = Dummy.url_1
+
+    expect(client.url_min_response_time(url)).to eq(10)
+  end
+
+  it "lists response times from longest to shortest for a specific url" do
+    client = Dummy.client_1
+    Dummy.payload_request_1
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20)
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 30)
+    url = Dummy.url_1
+
+    expect(client.list_response_times(url)).to eq([30, 20, 10])
+  end
+
+  it "lists average response time for a specific url" do
+    client = Dummy.client_1
+    Dummy.payload_request_1
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20)
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 30)
+    url = Dummy.url_1
+
+    expect(client.avg_response_time(url)).to eq(20)
+  end
+
+  it "lists verbs associated with a specific url" do
+    client = Dummy.client_1
+    Dummy.payload_request_1
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20)
+    Dummy.payload_request_custom(1, 1, 2, 1, 1, 1, 1, 30)
+    request_type_1 = Dummy.request_type_1
+    request_type_2 = Dummy.request_type_2
+    url = Dummy.url_1
+
+    client_url_verbs = client.list_verbs_for(url)
+    expect(client_url_verbs.length).to eq(2)
+    expect(client_url_verbs).to include(request_type_1, request_type_2)
+  end
+
+  it "knows three most popular sources for a url" do
+    client = Dummy.client_1
+    Dummy.payload_request_1
+    4.times { Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20) }
+    3.times { Dummy.payload_request_custom(1, 2, 1, 1, 1, 1, 1, 30) }
+    2.times { Dummy.payload_request_custom(1, 3, 1, 1, 1, 1, 1, 30) }
+    Dummy.payload_request_custom(1, 4, 1, 1, 1, 1, 1, 30)
+    source_1 = Dummy.source_1
+    source_2 = Dummy.source_2
+    source_3 = Dummy.source_3
+    Dummy.source_4
+    url = Dummy.url_1
+
+    three_most_popular_referrers = client.most_popular_sources_for(url)
+    expect(three_most_popular_referrers.length).to eq(3)
+    expect(three_most_popular_referrers).to include(source_2)
+    expect(three_most_popular_referrers.first).to eq(source_1)
+    expect(three_most_popular_referrers.last).to eq(source_3)
+  end
+
+  it "knows three most popular user agents for a url" do
+    client = Dummy.client_1
+    Dummy.payload_request_1
+    4.times { Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20) }
+    3.times { Dummy.payload_request_custom(1, 1, 1, 2, 1, 1, 1, 30) }
+    2.times { Dummy.payload_request_custom(1, 1, 1, 3, 1, 1, 1, 30) }
+    Dummy.payload_request_custom(1, 1, 1, 4, 1, 1, 1, 30)
+    u_agent_1 = Dummy.u_agent_1
+    u_agent_2 = Dummy.u_agent_2
+    u_agent_3 = Dummy.u_agent_3
+    Dummy.u_agent_4
+    url = Dummy.url_1
+
+    three_most_popular_u_agents = client.most_popular_u_agents_for(url)
+    expect(three_most_popular_u_agents.length).to eq(3)
+    expect(three_most_popular_u_agents).to include(u_agent_2)
+    expect(three_most_popular_u_agents.first).to eq(u_agent_1)
+    expect(three_most_popular_u_agents.last).to eq(u_agent_3)
+  end
+
+
+
   # skip "will get all request types associated with a client" do
   #
   #   client = Client.create("identifier" => "jumpstartlab",

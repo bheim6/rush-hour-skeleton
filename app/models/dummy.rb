@@ -99,6 +99,10 @@ module Dummy
     Source.create("address" =>"www.google.com")
   end
 
+  def self.source_4
+    Source.create("address" =>"www.ebay.com")
+  end
+
   def self.u_agent_1
     UAgent.create("operating_system" =>"Windows Vista", "browser" =>"Chrome")
   end
@@ -109,6 +113,10 @@ module Dummy
 
   def self.u_agent_3
     UAgent.create("operating_system" =>"Linux", "browser" =>"Firefox")
+  end
+
+  def self.u_agent_4
+    UAgent.create("operating_system" =>"MAC OSX", "browser" =>"Safari")
   end
 
   def self.url_1

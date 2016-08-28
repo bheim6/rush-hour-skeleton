@@ -58,14 +58,16 @@ RSpec.describe Dummy, type: :model do
     expect(Dummy.source_1).to be_instance_of(Source)
     expect(Dummy.source_2).to be_instance_of(Source)
     expect(Dummy.source_3).to be_instance_of(Source)
-    expect(Source.all.count).to eq(3)
+    expect(Dummy.source_4).to be_instance_of(Source)
+    expect(Source.all.count).to eq(4)
   end
 
   it "creates a u agent" do
     expect(Dummy.u_agent_1).to be_instance_of(UAgent)
     expect(Dummy.u_agent_2).to be_instance_of(UAgent)
     expect(Dummy.u_agent_3).to be_instance_of(UAgent)
-    expect(UAgent.all.count).to eq(3)
+    expect(Dummy.u_agent_4).to be_instance_of(UAgent)
+    expect(UAgent.all.count).to eq(4)
   end
 
   it "creates a url" do
