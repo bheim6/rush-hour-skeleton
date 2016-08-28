@@ -75,7 +75,8 @@ RSpec.describe RequestType, type: :model do
 
   it "knows the most frequent request type" do
     make_request_types_and_payload_requests
-    expect(RequestType.most_frequent_request_type).to eq("GET")
+    request_type = RequestType.find_by("verb" => "GET")
+    expect(RequestType.most_frequent_request_type).to eq(request_type)
   end
 
   it "lists all HTTP verbs used" do

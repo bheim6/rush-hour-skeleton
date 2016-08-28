@@ -2,6 +2,7 @@ class Url < ActiveRecord::Base
   has_many :payload_requests
   has_many :request_types, through: :payload_requests
   has_many :sources, through: :payload_requests
+  # has_many :u_agents, through: :payload_requests
   validates :address, presence: true
   validates :address, uniqueness: true
 
@@ -38,25 +39,25 @@ class Url < ActiveRecord::Base
   end
 
   def verbs
-    request_types
+    request_types.uniq
   end
 
-  def url_max_response_time
+  def max_response_time
     requests  = PayloadRequest.where(url_id: id)
     requests.maximum(:responded_in).to_i
   end
 
-  def url_min_response_time
+  def min_response_time
     requests  = PayloadRequest.where(url_id: id)
     requests.minimum(:responded_in).to_i
   end
 
-  def url_response_times
+  def response_times
     requests  = PayloadRequest.where(url_id: id)
     requests.order('responded_in DESC').pluck(:responded_in)
   end
 
-  def url_avg_response_time
+  def avg_response_time
     requests  = PayloadRequest.where(url_id: id)
     requests.average(:responded_in).to_i
   end

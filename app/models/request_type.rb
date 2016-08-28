@@ -6,11 +6,11 @@ class RequestType < ActiveRecord::Base
 
   def self.most_frequent_request_type
     grouping = group_by_request_type
-    RequestType.find_by(:id => grouping[grouping.keys.max]).verb
+    find_by(:id => grouping[grouping.keys.max])
   end
 
   def self.list_verbs
-    RequestType.pluck(:verb)
+    pluck(:verb)
   end
 
   def self.group_by_request_type

@@ -14,6 +14,7 @@ require 'database_cleaner'
 require 'pry'
 require 'rack/test'
 
+include Dummy
 # require 'active_record'
 
 Capybara.app = RushHour::Server

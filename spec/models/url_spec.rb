@@ -128,20 +128,16 @@ RSpec.describe Url, type: :model do
   end
 
   it "knows the verbs associated with it" do
-    url = Url.create(:address => "www.turing.io")
-    verb = RequestType.create(:verb => "GET")
-    payload_request = PayloadRequest.create(
-      "url_id"                =>  url.id,
-      "requested_at"          =>  "2013-02-16 21:38:28 -0700",
-      "responded_in"          =>  35,
-      "source_id"             =>  5,
-      "request_type_id"       =>  verb.id,
-      "u_agent_id"            =>  5,
-      "screen_resolution_id"  =>  4,
-      "ip_address_id"                 =>  6,
-      "client_id"             =>  10)
+    url = Dummy.url_1
+    request_type_1 = Dummy.request_type_1
+    request_type_2 = Dummy.request_type_2
+    Dummy.payload_request_1
+    Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 20)
+    Dummy.payload_request_custom(1, 1, 2, 1, 1, 1, 1, 30)
 
-    expect(url.verbs).to include(verb)
+    expect(url.verbs.length).to eq(2)
+    expect(url.verbs).to include(request_type_1)
+    expect(url.verbs).to include(request_type_2)
   end
 
   it "knows the three most popular user agents for a specific url" do
@@ -175,7 +171,7 @@ RSpec.describe Url, type: :model do
                 end
 
 
-      expect(url.url_max_response_time).to eq(30)
+      expect(url.max_response_time).to eq(30)
     end
 
     it "will find min response time for a specific url" do
@@ -194,7 +190,7 @@ RSpec.describe Url, type: :model do
                 end
 
 
-      expect(url.url_min_response_time).to eq(20)
+      expect(url.min_response_time).to eq(20)
     end
 
     it "will find all response times for a specific url in descending order" do
@@ -213,7 +209,7 @@ RSpec.describe Url, type: :model do
                 end
 
 
-      expect(url.url_response_times).to eq([30, 25, 20])
+      expect(url.response_times).to eq([30, 25, 20])
     end
 
     it "will find average response time for a specific url" do
@@ -232,7 +228,7 @@ RSpec.describe Url, type: :model do
                 end
 
 
-      expect(url.url_avg_response_time).to eq(25)
+      expect(url.avg_response_time).to eq(25)
     end
 
 end
