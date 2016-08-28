@@ -59,6 +59,10 @@ module Dummy
     payload_request_template(9, 3, 3, 3, 3, 3, 3)
   end
 
+  def self.payload_request_custom(url_id, source_id, request_type_id, u_agent_id, screen_resolution_id, ip_address_id, client_id, response_time=rand(40))
+    payload_request_template(url_id, source_id, request_type_id, u_agent_id, screen_resolution_id, ip_address_id, client_id, response_time)
+  end
+
   def self.request_type_1
     RequestType.create("verb" => "GET")
   end

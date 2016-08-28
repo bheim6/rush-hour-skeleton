@@ -2,6 +2,11 @@ require './spec/spec_helper'
 require './app/models/dummy'
 
 RSpec.describe Dummy, type: :model do
+
+  after :each do
+    DatabaseCleaner.clean
+  end
+
   it "creates a client" do
     expect(Dummy.client_1).to be_instance_of(Client)
     expect(Dummy.client_2).to be_instance_of(Client)
@@ -27,6 +32,12 @@ RSpec.describe Dummy, type: :model do
     expect(Dummy.payload_request_8).to be_instance_of(PayloadRequest)
     expect(Dummy.payload_request_9).to be_instance_of(PayloadRequest)
     expect(PayloadRequest.all.count).to eq(9)
+  end
+
+  it "creates a custom payload request" do
+    custom = Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 10)
+    expect(custom).to be_instance_of(PayloadRequest)
+    expect(PayloadRequest.all.count).to eq(1)
   end
 
   it "creates a request type" do

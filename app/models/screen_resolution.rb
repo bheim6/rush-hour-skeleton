@@ -6,7 +6,7 @@ class ScreenResolution < ActiveRecord::Base
   validates :width, uniqueness: {scope: :height}
 
   def self.display_resolutions
-    ScreenResolution.pluck(:width, :height)
+    pluck(:width, :height)
   end
 
   def self.group_by_screen_resolution_id
