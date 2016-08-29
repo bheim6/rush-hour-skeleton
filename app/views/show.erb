@@ -1,5 +1,11 @@
-<h1><%= @url.address %></h1>
-<table>
+
+<div class="jumbotron">
+  <h1> <%= @client.identifier %></h1>
+  <h2> <%= @url.address %> </h2>
+  <a href="/sources/<%= @client.identifier %>" class="col-md-offset-11 btn btn-primary">Back</a>
+</div>
+
+<table class="table">
   <tr>
     <th>Max Response Time</th>
     <td><%= @client.url_max_response_time(@url) %></td>
@@ -33,9 +39,17 @@
   <tr>
     <th>Three most popular user agents</th>
     <td>
-      <% @client.most_popular_u_agents_for(@url).each do |u_agent| %>
-        <p> <%= u_agent.browser %> on <%= u_agent.operating_system %> </p>
-      <% end %>
+      <table class="table">
+        <tr>
+          <th>Web Browser</th><th>Operating System</th>
+        </tr>
+        <% @client.most_popular_u_agents_for(@url).each do |u_agent| %>
+          <tr>
+            <td> <%= u_agent.browser %> </td>
+            <td> <%= u_agent.operating_system %> </td>
+          <tr>
+        <% end %>
+      </table>
     </td>
   </tr>
 </table> <!-- end of table-->
