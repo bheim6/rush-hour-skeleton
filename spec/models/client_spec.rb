@@ -104,9 +104,9 @@ RSpec.describe Client, type: :model do
     client = Dummy.client_1
     expect(Client.all.count).to eq(1)
 
-    Dummy.payload_request_1 # 1, 1, 1, 1, 1, 1, 1, 10
-    Dummy.payload_request_2 # 2, 2, 2, 2, 2, 2, 1, 20
-    Dummy.payload_request_3 # 3, 3, 3, 3, 3, 3, 1, 30
+    Dummy.payload_request_1
+    Dummy.payload_request_2
+    Dummy.payload_request_3
     pr = Dummy.payload_request_custom(1, 1, 1, 1, 1, 1, 1, 10)
     expect(PayloadRequest.all.count).to eq(4)
 
@@ -241,30 +241,4 @@ RSpec.describe Client, type: :model do
     expect(three_most_popular_u_agents.first).to eq(u_agent_1)
     expect(three_most_popular_u_agents.last).to eq(u_agent_3)
   end
-
-
-
-  # skip "will get all request types associated with a client" do
-  #
-  #   client = Client.create("identifier" => "jumpstartlab",
-  #     "root_url" => "www.jumpstartlab.com")
-  #
-  #     PayloadRequest.create(
-  #       "url_id"=>1,
-  #       "requested_at"=>"2013-02-16 21:38:28 -0700",
-  #       "responded_in"=>37,
-  #       "source_id"=>2,
-  #       "request_type_id"=>1,
-  #       "u_agent_id"=>5,
-  #       "screen_resolution_id"=>4,
-  #       "ip_address_id"=>6,
-  #       "client_id"=>1)
-  #
-  #       RequestType.create("verb" =>"GET")
-  #
-  #       binding.pry
-  #   thingy = client.payload_requests.request_type
-  #   expect(thingy).to be("Hello World!")
-  # end
-
 end

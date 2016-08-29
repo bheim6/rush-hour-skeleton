@@ -3,10 +3,6 @@ require './app/models/url'
 
 RSpec.describe Url, type: :model do
 
-  before :each do
-
-  end
-
   after :each do
     DatabaseCleaner.clean
   end
@@ -26,7 +22,7 @@ RSpec.describe Url, type: :model do
           "request_type_id"       =>  1,
           "u_agent_id"            =>  5,
           "screen_resolution_id"  =>  4,
-          "ip_address_id"                 =>  6,
+          "ip_address_id"         =>  6,
           "client_id"             =>  10)
       end
   end
@@ -52,7 +48,7 @@ RSpec.describe Url, type: :model do
           "request_type_id"       =>  1,
           "u_agent_id"            =>  5,
           "screen_resolution_id"  =>  4,
-          "ip_address_id"                 =>  6,
+          "ip_address_id"         =>  6,
           "client_id"             =>  10)
       end
   end
@@ -76,7 +72,7 @@ RSpec.describe Url, type: :model do
           "request_type_id"       =>  1,
           "u_agent_id"            =>  u_agent_id,
           "screen_resolution_id"  =>  4,
-          "ip_address_id"                 =>  6,
+          "ip_address_id"         =>  6,
           "client_id"             =>  10)
       end
   end
