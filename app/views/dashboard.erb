@@ -1,5 +1,22 @@
-<h1> <%= @client.identifier %></h1>
-<table>
+
+<div class="jumbotron">
+  <h1> <%= @client.identifier %></h1>
+</div>
+
+<div class="row">
+    <% @client.urls.uniq.each do |url| %>
+      <% id = @client.identifier %>
+      <% address = url.address.split(id +".com").last %>
+        <div class="text-center col-md-4">
+          <a class ="thumbnail" href="/sources/<%= id %>/urls<%= address %>">
+            <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+            <p><%= url.address %></p>
+          </a>
+        </div>
+    <% end %>
+</div>
+
+<table class="table">
   <tr>
     <th>Average response time across all requests</th>
     <td><%= @client.average_response_time %></td>
@@ -20,32 +37,48 @@
   <tr>
     <th>Web browser breakdown across all requests</th>
     <td>
-      <% @client.browser_breakdown.to_a.each do |browser_count| %>
-        <p> <%= browser_count[0] %> : <%= browser_count[1] %> </p>
-      <% end %>
+      <table class="table">
+        <tr>
+          <th>Web Browser</th><th>Count</th>
+        </tr>
+        <% @client.browser_breakdown.to_a.each do |browser_count| %>
+          <tr>
+            <td> <%= browser_count[0] %> </td>
+            <td> <%= browser_count[1] %> </td>
+          <tr>
+        <% end %>
+      </table>
     </td>
   <tr>
     <th>OS breakdown across all requests</th>
     <td>
-      <% @client.os_breakdown.to_a.each do |os_count| %>
-        <p> <%= os_count[0] %> : <%= os_count[1] %> </p>
-      <% end %>
+      <table class="table">
+        <tr>
+          <th>Operating System</th><th>Count</th>
+        </tr>
+        <% @client.os_breakdown.to_a.each do |os_count| %>
+          <tr>
+            <td> <%= os_count[0] %> </td>
+            <td> <%= os_count[1] %> </td>
+          <tr>
+        <% end %>
+      </table>
     </td>
   </tr>
   <tr>
     <th>Screen Resolutions across all requests (resolutionWidth x resolutionHeight)</th>
-    <td><%= @client.display_resolutions.uniq %></td>
+    <td>
+      <table class="table">
+        <tr>
+          <th>Width</th><th>Height</th>
+        </tr>
+        <% @client.display_resolutions.uniq.each do |resolution| %>
+          <tr>
+            <td> <%= resolution[0] %> </td>
+            <td> <%= resolution[1] %> </td>
+          <tr>
+        <% end %>
+      </table>
+    </td>
   </tr>
 </table> <!-- end of table-->
-
-<% @client.urls.uniq.each do |url| %>
-  <% id = @client.identifier %>
-  <% address = url.address.split(id +".com").last %>
-  <p>id = <%= id %> </p>
-  <p>address = <%= address %> </p>
-  <p>
-    <a href="/sources/<%= id %>/urls<%= address %>">
-      <%= url.address %>
-    </a>
-  </p>
-<% end %>
