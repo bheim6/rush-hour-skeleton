@@ -2,7 +2,6 @@ require './spec/spec_helper'
 require './app/models/payload_request'
 
 RSpec.describe PayloadRequest, type: :model do
-  # include TestHelpers
   after :each do
       DatabaseCleaner.clean
     end
@@ -82,7 +81,7 @@ RSpec.describe PayloadRequest, type: :model do
     expect(PayloadRequest.new(:ip_address_id => "")).to be_invalid
   end
 
-  it "will not create a payload request without an ip_address_id" do
+  it "will not create a payload request without a client_id" do
     expect(PayloadRequest.new(:client_id => "")).to be_invalid
   end
 

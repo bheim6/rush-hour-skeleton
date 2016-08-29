@@ -2,7 +2,6 @@ class Url < ActiveRecord::Base
   has_many :payload_requests
   has_many :request_types, through: :payload_requests
   has_many :sources, through: :payload_requests
-  # has_many :u_agents, through: :payload_requests
   validates :address, presence: true
   validates :address, uniqueness: true
 
