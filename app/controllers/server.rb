@@ -1,4 +1,5 @@
 require './app/models/client_request'
+require './app/models/payload_request_request'
 
 module RushHour
   class Server < Sinatra::Base
@@ -67,35 +68,38 @@ module RushHour
     end
 
     post '/sources/:identifier/data' do
-      @params = params
-      @expected_params = payload_request_parameters
-      @messages = payload_messages
-      if !params_valid?
-        response = bad_request
-      elsif !payload_valid?
-        response = bad_request
-      else
-        @payload_request = DataParser.new(params).parse_payload
-        if payload_request_exists?
-          response = response = {
-            :status_msg => 403,
-            :message => "Payload request already exists"
-          }
-        elsif application_request_does_not_exist?
-          response = response = {
-            :status_msg => 403,
-            :message => "Application does not exist"
-          }
-        else
-          PayloadRequest.create(payload_request)
-          response = {
-            :status_msg => 200,
-            :message => "Success"
-          }
-        end
-      end
-      status response[:status_msg]
-      body response[:message]
+      prr = PayloadRequestRequest.new(params)
+      status prr.status
+      body prr.message
+      # @params = params
+      # @expected_params = payload_request_parameters
+      # @messages = payload_messages
+      # if !params_valid?
+      #   response = bad_request
+      # elsif !payload_valid?
+      #   response = bad_request
+      # else
+      #   @payload_request = DataParser.new(params).parse_payload
+      #   if payload_request_exists?
+      #     response = response = {
+      #       :status_msg => 403,
+      #       :message => "Payload request already exists"
+      #     }
+      #   elsif application_request_does_not_exist?
+      #     response = response = {
+      #       :status_msg => 403,
+      #       :message => "Application does not exist"
+      #     }
+      #   else
+      #     PayloadRequest.create(payload_request)
+      #     response = {
+      #       :status_msg => 200,
+      #       :message => "Success"
+      #     }
+      #   end
+      # end
+      # status response[:status_msg]
+      # body response[:message]
     end
 
 

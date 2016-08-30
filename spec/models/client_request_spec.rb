@@ -2,7 +2,10 @@ require './spec/spec_helper'
 require './app/models/client_request'
 
 RSpec.describe ClientRequest, type: :model do
-
+  after :each do
+    DatabaseCleaner.clean
+  end
+  
   def valid_params
     {"identifier" => "jumpstartlab", "rootUrl" => "www.jumpstartlab.com"}
   end
