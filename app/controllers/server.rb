@@ -1,3 +1,5 @@
+require './app/models/client_request'
+
 module RushHour
   class Server < Sinatra::Base
 
@@ -52,13 +54,16 @@ module RushHour
     end
 
     post '/sources' do
-      @params = params
-      @expected_params = client_params
-      @messages = client_messages
-      @exists = client_exists?
-      response = params_valid? ? check_if_exists : bad_request
-      status response[:status_msg]
-      body response[:message]
+      cr = ClientRequest.new(params)
+      status cr.status
+      body cr.message
+      # @params = params
+      # @expected_params = client_params
+      # @messages = client_messages
+      # @exists = client_exists?
+      # response = params_valid? ? check_if_exists : bad_request
+      # status response[:status_msg]
+      # body response[:message]
     end
 
     post '/sources/:identifier/data' do
